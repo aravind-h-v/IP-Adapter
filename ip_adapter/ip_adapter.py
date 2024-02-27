@@ -388,7 +388,7 @@ class IPAdapterFull(IPAdapterPlus):
         return image_proj_model
 
 
-class IPAdapterFull_aravind(IPAdapterPlus):
+class IPAdapterFull_aravind(IPAdapter):
     """IP-Adapter with full features"""
 
     def init_proj(self):
