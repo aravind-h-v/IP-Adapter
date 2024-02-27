@@ -271,6 +271,19 @@ class IPAdapter:
         return images
 
 
+class IPAdapterFull_aravind(IPAdapter):
+
+    def init_proj(self):
+
+        image_proj_model = MLPProjModel_aravind(
+            cross_attention_dim=self.pipe.unet.config.cross_attention_dim,
+            clip_embeddings_dim=self.image_encoder.config.projection_dim,
+            clip_extra_context_tokens=self.num_tokens,
+        ).to(self.device, dtype=torch.float16)
+
+        return image_proj_model
+
+
 class IPAdapterXL(IPAdapter):
     """SDXL"""
 
@@ -385,25 +398,6 @@ class IPAdapterFull(IPAdapterPlus):
             cross_attention_dim=self.pipe.unet.config.cross_attention_dim,
             clip_embeddings_dim=self.image_encoder.config.hidden_size,
         ).to(self.device, dtype=torch.float16)
-        return image_proj_model
-
-
-class IPAdapterFull_aravind(IPAdapter):
-    """IP-Adapter with full features"""
-
-    def init_proj(self):
-
-        image_proj_model = MLPProjModel_aravind(
-            cross_attention_dim=self.pipe.unet.config.cross_attention_dim,
-            clip_embeddings_dim=self.image_encoder.config.projection_dim,
-            clip_extra_context_tokens=16,
-        ).to(self.device, dtype=torch.float16)
-
-        # image_proj_model = MLPProjModel(
-        #     cross_attention_dim=self.pipe.unet.config.cross_attention_dim,
-        #     clip_embeddings_dim=self.image_encoder.config.hidden_size,
-        # ).to(self.device, dtype=torch.float16)
-
         return image_proj_model
 
 
